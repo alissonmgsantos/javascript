@@ -9,19 +9,20 @@ class Negociacao {
         this._valor = valor;
     }
 
-    getData() {
+    // Criando propriedades getter de leitura, será o método mas acessado como atríbuto
+    get data() {
         return this._data;
     }
 
-    getQuantidade() {
+    get quantidade() {
         return this._quantidade;
     }
 
-    getValor() {
+    get valor() {
         return this._valor;
     }
 
-    getVolume() {
+    get volume() {
         return this._quantidade * this._valor;
     }
 }
