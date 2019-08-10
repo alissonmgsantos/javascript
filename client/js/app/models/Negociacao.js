@@ -7,6 +7,9 @@ class Negociacao {
         this._data = data;
         this._quantidade = quantidade;
         this._valor = valor;
+
+        // Tornando o objeto imutável
+        Object.freeze(this);
     }
 
     // Criando propriedades getter de leitura, será o método mas acessado como atríbuto
