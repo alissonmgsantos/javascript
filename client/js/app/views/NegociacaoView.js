@@ -1,11 +1,6 @@
-class NegociacaoView {
+class NegociacaoView extends BaseView {
 
-       constructor(elemento) {
-
-        this._elemento = elemento;
-    }
-
-    _template(model) {
+    template(model) {
 
         return `<table class="table table-hover table-bordered">
                     <thead>
@@ -39,10 +34,5 @@ class NegociacaoView {
                 </tfoot>
              </table>
             `;
-    }
-
-    // Exibirá a tabela no local definido como marcação, na atualização da tela
-    update(model) {
-      return  this._elemento.innerHTML = this._template(model);
     }
 }
