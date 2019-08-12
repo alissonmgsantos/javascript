@@ -10,13 +10,14 @@ class NegociacaoController {
         this._negociacoesView = new NegociacaoView($('#negociacoesView'));
 
         // Exibirá a tabela no HTML
-        this._negociacoesView.update();
+        this._negociacoesView.update(this._listaNegociacoes);
     }
 
     adiciona(event) {
         event.preventDefault();
         // Passando os dados do formulário para criação da negociação
         this._listaNegociacoes.adiciona(this._criaNegociacao());
+        this._negociacoesView.update(this._listaNegociacoes);
         this._limpaFormulario();
     }
 

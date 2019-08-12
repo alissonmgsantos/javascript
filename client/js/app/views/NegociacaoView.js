@@ -5,7 +5,7 @@ class NegociacaoView {
         this._elemento = elemento;
     }
 
-    _template() {
+    _template(model) {
 
         return `<table class="table table-hover table-bordered">
                     <thead>
@@ -17,13 +17,23 @@ class NegociacaoView {
                         </tr>
                     </thead>
                     <tbody>
-                    </tbody>
+                    ${model.negociacoes.map(n => {
+                    return `
+                        <tr>
+                            <td>${DateHelper.dataParaTexto(n.data)}</td>
+                            <td>${n.quantidade}</td>
+                            <td>${n.valor}</td>
+                            <td>${n.volume}</td>
+                        </tr>
+                    `
+                    }).join('')}
+                </tbody>
              </table>
             `;
     }
 
     // Exibirá a tabela no local definido como marcação, na atualização da tela
-    update() {
-      return  this._elemento.innerHTML = this._template();
+    update(model) {
+      return  this._elemento.innerHTML = this._template(model);
     }
 }
