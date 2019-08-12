@@ -11,6 +11,11 @@ class NegociacaoController {
 
         // Exibirá a tabela no HTML
         this._negociacoesView.update(this._listaNegociacoes);
+
+        // Exibirá mensagem
+        this._mensagem = new Mensagem();
+        this._mensagemView = new MensagemView($('#mensagemView'));
+        this._mensagemView.update(this._mensagem);
     }
 
     adiciona(event) {
@@ -18,6 +23,10 @@ class NegociacaoController {
         // Passando os dados do formulário para criação da negociação
         this._listaNegociacoes.adiciona(this._criaNegociacao());
         this._negociacoesView.update(this._listaNegociacoes);
+        this._mensagem.texto = 'Negociacao adicionada com sucesso';
+    this._mensagemView.update(this._mensagem);  
+        
+
         this._limpaFormulario();
     }
 
