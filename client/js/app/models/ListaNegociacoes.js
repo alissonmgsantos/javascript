@@ -7,12 +7,10 @@ class ListaNegociacoes {
 
     adiciona(negociacao) {
         this.__negociacoes.push(negociacao);
-        this._atualizaView(this);
     }
 
     esvazia() {
         this.__negociacoes = [];
-        this._atualizaView(this);
     }
 
     get negociacoes() {
