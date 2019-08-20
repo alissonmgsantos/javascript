@@ -7,10 +7,10 @@ class NegociacaoController {
         this._inputValor = $('#valor');
 
         // BIND PARA ASSOCIAR MODEL COM VIEW
-        this._listaNegociacoes = new Bind (
-                new ListaNegociacoes(),
-                new NegociacaoView($('#negociacoesView')),
-                ['adiciona', 'esvazia']);
+        this._listaNegociacoes = new Bind(
+            new ListaNegociacoes(),
+            new NegociacaoView($('#negociacoesView')),
+            ['adiciona', 'esvazia']);
 
         // BIND PARA ASSOCIAR MODEL COM VIEW
         this._mensagem = new Bind(
@@ -30,16 +30,26 @@ class NegociacaoController {
     importaNegociacoes() {
         let service = new NegociacaoService();
 
-  service.obterNegociacoesDaSemana((err, negociacoes) => {
-      if(err) {
-          this._mensagem.texto = err;
-          return;
-      }
+        service.obterNegociacoesDaSemana()
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+                this._mensagem.texto = 'Negociações da semana obtidas com sucesso';
+            })
+            .catch(erro => this._mensagem.texto = erro);
 
-      negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-      this._mensagem.texto = 'Negociações importadas com sucesso';
-  });
-  
+        service.obterNegociacoesDaSemanaAnterior()
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+                this._mensagem.texto = 'Negociações da semana obtidas com sucesso';
+            })
+            .catch(erro => this._mensagem.texto = erro);
+
+        service.obterNegociacoesDaSemanaRetrasada()
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+                this._mensagem.texto = 'Negociações da semana obtidas com sucesso';
+            })
+            .catch(erro => this._mensagem.texto = erro);
     }
 
     apaga() {
@@ -59,7 +69,7 @@ class NegociacaoController {
         this._inputData.value = '';
         this._inputQunatidade.value = 1;
         this._inputValor.value = 0.0;
-        
+
         this._inputData.focus();
     }
 }
