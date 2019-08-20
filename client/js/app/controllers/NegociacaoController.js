@@ -7,27 +7,12 @@ class NegociacaoController {
         this._inputValor = $('#valor');
 
         let self = this;
-        this._listaNegociacoes = new Proxy(new ListaNegociacoes(), {
 
-            get(target, prop, receiver) {
+        this._listaNegociacoes = ProxyFactory.create (
+            new ListaNegociacoes(),
+            ['adiciona', 'esvazia'], model =>
+                this._negociacoesView.update(model));
         
-                if(['adiciona', 'esvazia'].includes(prop) && typeof(target[prop]) == typeof(Function)) {
-        
-                    return function(){
-        
-                      console.log(`método '${prop}' interceptado`);
-        
-                     Reflect.apply(target[prop], target, arguments);
-        
-                      self._negociacoesView.update(target);
-        
-                    }
-             }
-        
-             return Reflect.get(target, prop, receiver);
-          }
-        });
-
         // Chamará o html responvsavel por exibir os registros
         this._negociacoesView = new NegociacaoView($('#negociacoesView'));
 
@@ -35,8 +20,11 @@ class NegociacaoController {
         this._negociacoesView.update(this._listaNegociacoes);
 
         // Exibirá mensagem
-        this._mensagem = new Mensagem();
-        this._mensagemView = new MensagemView($('#mensagemView'));
+
+        this._mensagem = ProxyFactory.create(
+            new Mensagem(), ['texto'], model =>
+                this._mensagemView.update(model));
+        this._mensagemView = new MensagemView($('#mensagemView'));  
         this._mensagemView.update(this._mensagem);
     }
 
@@ -45,15 +33,12 @@ class NegociacaoController {
         // Passando os dados do formulário para criação da negociação
         this._listaNegociacoes.adiciona(this._criaNegociacao());
         this._mensagem.texto = 'Negociacao adicionada com sucesso';
-        this._mensagemView.update(this._mensagem);  
         this._limpaFormulario();
     }
 
     apaga() {
         this._listaNegociacoes.esvazia();
         this._mensagem.texto = 'Lista de negociações apagada com sucesso!';
-
-        this._mensagemView.update(this._mensagem);
     }
 
     _criaNegociacao() {
