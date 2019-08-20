@@ -38,7 +38,7 @@ class NegociacaoService {
 
     obterNegociacoesDaSemanaRetrasada() {
         return new Promise((resolve, reject) => {
-            this.http
+            this._http
                 .get('negociacoes/retrasada')
                 .then(negociacoes => {
                     console.log(negociacoes);
