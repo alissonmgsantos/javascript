@@ -6,7 +6,7 @@ class NegociacaoDao {
         this._store = 'negociacoes';
     }
 
-    adiciona() {
+    adiciona(negociacao) {
         return new Promise((resolve, reject) => {
 
             let request = this._connection
